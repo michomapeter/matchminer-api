@@ -1,0 +1,5 @@
+FROM docker.elastic.co/elasticsearch/elasticsearch:6.8.12
+
+RUN chown -R 1000:1000 /usr/share/elasticsearch/data
+
+CMD [ "docker-entrypoint.sh" ]
