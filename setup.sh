@@ -22,6 +22,7 @@ echo "*****************"
 echo "SETTING UP MONGO"
 echo "*****************"
 sleep 5
+docker compose exec mm-mongo mongorestore --dir=/data/tcga
 
 echo "Add dev user to database to bypass authentication"
 docker compose exec mm-mongo mongosh matchminer --eval 'db.user.replaceOne({

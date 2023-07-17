@@ -30,13 +30,13 @@ services:
       - "27017:27017"
     networks:
       - mm-dev-network
+    volumes:
+      - ./data/tcga:/data/tcga
 
   mm-elastic:
     container_name: mm-elastic
     restart: "no"
-    build:
-      context: .
-      dockerfile: dockerfile.elastic
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.8.12
     ports:
       - "9200:9200"
     volumes:
@@ -46,6 +46,11 @@ services:
       - ./elasticsearch/es_data:/usr/share/elasticsearch/data
     networks:
       - mm-dev-network
+    environment:
+      - discovery.type=single-node
+      - node.name=es01
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
 
 networks:
   mm-dev-network:
